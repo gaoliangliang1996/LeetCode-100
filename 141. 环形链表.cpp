@@ -19,3 +19,21 @@ public:
         return false;
     }
 };
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        unordered_set<ListNode*> nodes;
+
+        ListNode* current = head;
+        while (current != nullptr) {
+            if (nodes.find(current) != nodes.end())
+                return true;
+            
+            nodes.insert(current);
+            current = current->next;
+        }
+
+        return false;
+    }
+};
