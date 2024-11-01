@@ -37,3 +37,55 @@ public:
         dfs(grid, i, j + 1, row, col);
     }
 };
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int result = 0;
+        int rows = grid.size();
+        if (rows == 0)
+            return result;
+        int cols = grid[0].size();
+        if (cols == 0)
+            return result;
+
+        queue<pair<int, int>> q;
+        
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == '1') {
+                    result++;
+                    q.push({i, j});
+                    grid[i][j] = '0';
+
+                    while (!q.empty()) {
+                        auto cur = q.front();
+                        q.pop();
+
+                        int x = cur.first;
+                        int y = cur.second;
+
+                        if (x - 1 >= 0 && grid[x - 1][y] == '1') {
+                            grid[x - 1][y] = '0';
+                            q.push({x - 1, y});
+                        }
+                        if (y - 1 >= 0 && grid[x][y - 1] == '1') {
+                            grid[x][y - 1] = '0';
+                            q.push({x, y - 1});
+                        }
+                        if (x + 1 < rows && grid[x + 1][y] == '1') {
+                            grid[x + 1][y] = '0';
+                            q.push({x + 1, y});
+                        }
+                        if (y + 1 < cols && grid[x][y + 1] == '1') {
+                            grid[x][y + 1] = '0';
+                            q.push({x, y + 1});
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+};
